@@ -1,0 +1,250 @@
+* {
+  font-family: raleway;
+}
+
+#container {
+  max-width: 1200px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#container header {
+  background-color: rgba(0, 0, 0, 0.118);
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  height: 110px;
+  width: 100%;
+}
+
+#container header i {
+  font-size: 30px;
+  margin-left: 30px;
+}
+
+#container header #main_logo {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 40%;
+  object-fit: contain;
+}
+
+#container header a {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none;
+  color: black;
+  font-size: medium;
+  font-weight: 600;
+}
+
+#container header #vide {
+  width: 10%;
+}
+
+#container h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-weight: 500;
+}
+
+#container #all_products {
+  display: flex;
+  flex-direction: column;
+}
+
+#container #all_products #empty_basket {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 60px;
+}
+
+#container #all_products .product_container {
+  margin-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#container #all_products .product_container .name_of_product {
+  width: 27%;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#container #all_products .product_container .image_of_product {
+  width: 25%;
+  border-radius: 5px;
+}
+
+#container #all_products .product_container .price_of_product {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#container #all_products .product_container .quantities {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#container #all_products .product_container .quantities .btn_less {
+  text-align: center;
+  transition-duration: 0.2s;
+  width: 15%;
+  cursor: pointer;
+  color: #9961df;
+  font-size: 20px;
+  border: none;
+  background-color: white;
+}
+
+#container #all_products .product_container .quantities .btn_less:hover {
+  transition-duration: 0.2s;
+  font-size: 25px;
+}
+
+#container #all_products .product_container .quantities p {
+  margin-left: 15px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#container #all_products .product_container .quantities .btn_plus {
+  text-align: center;
+  transition-duration: 0.2s;
+  width: 15%;
+  cursor: pointer;
+  color: #ce7d4b;
+  font-size: 20px;
+  border: none;
+  background-color: white;
+}
+
+#container #all_products .product_container .quantities .btn_plus:hover {
+  transition-duration: 0.2s;
+  font-size: 25px;
+}
+
+#container #total {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#container #total #total_price {
+  text-align: center;
+  width: 30%;
+  font-weight: 500;
+}
+
+#container #modal {
+  background-color: blanchedalmond;
+  width: 100%;
+  margin-top: 50px;
+  height: 35em;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  border-radius: 15px;
+  margin-bottom: 50px;
+}
+
+#container #modal h2 {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+#container #modal h3 {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+#container #modal .inputs {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#container #modal .inputs input {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+#container #modal #confirm {
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  background: linear-gradient(#9a61dfdb, #ce7d4bcd);
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 20px;
+  margin-top: 30px;
+  margin-left: 35%;
+  margin-bottom: 50px;
+}
+
+#container footer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background-color: #1c1c1c;
+  margin-left: auto;
+  margin-right: auto;
+  height: 10em;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+#container footer p {
+  margin-top: 25px;
+  margin-left: 50px;
+  color: #ce7d4b;
+  font-weight: 600;
+}
+
+#container footer input {
+  width: 30%;
+  height: 20px;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+#container footer #social {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+#container footer #social i {
+  margin-left: 70px;
+  font-size: 20px;
+  color: white;
+}
