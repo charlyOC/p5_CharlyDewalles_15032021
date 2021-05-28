@@ -7,3 +7,5 @@ firstName.textContent = localStorage.getItem('firstname', JSON.stringify(firstNa
 
 let totalPrice = document.getElementById('total_price');
 totalPrice.textContent = localStorage.getItem('finalPrice') + '€';
+
+localStorage.clear();

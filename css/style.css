@@ -58,7 +58,7 @@
 
 #container header a #panier #basket_logo {
   object-fit: scale-down;
-  width: 50%;
+  width: 60%;
 }
 
 #container header a #panier #cart {
@@ -169,13 +169,14 @@
 
 #container footer p {
   margin-top: 25px;
-  margin-left: 50px;
+  margin-left: 5%;
+  margin-right: 5%;
   color: #ce7d4b;
   font-weight: 600;
 }
 
 #container footer input {
-  width: 30%;
+  width: 40%;
   height: 20px;
   margin-left: 50px;
   margin-top: 10px;

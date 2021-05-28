@@ -213,23 +213,19 @@
   background-color: #1c1c1c;
   margin-left: auto;
   margin-right: auto;
-  height: 10em;
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  border-radius: 15px;
 }
 
 #container footer p {
   margin-top: 25px;
-  margin-left: 50px;
+  margin-left: 5%;
+  margin-right: 5%;
   color: #ce7d4b;
   font-weight: 600;
 }
 
 #container footer input {
-  width: 30%;
+  width: 40%;
   height: 20px;
   margin-left: 50px;
   margin-top: 10px;
@@ -238,13 +234,14 @@
 #container footer #social {
   display: flex;
   flex-direction: row;
+  align-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
 }
 
 #container footer #social i {
-  margin-left: 70px;
+  padding: 30px;
   font-size: 20px;
   color: white;
 }

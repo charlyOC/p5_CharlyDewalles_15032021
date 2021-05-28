@@ -259,24 +259,20 @@ $secondary: #ce7d4b;
         background-color: rgb(28, 28, 28);
         margin-left: auto;
         margin-right: auto;
-        height: 10em;
-        border-radius: 20px;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        -ms-border-radius: 20px;
-        -o-border-radius: 20px;
+        border-radius: 15px;
 
         p
         {
             margin-top: 25px;
-            margin-left: 50px;
+            margin-left: 5%;
+            margin-right: 5%;
             color: $secondary;
             font-weight: 600;
         }
 
         input 
         {
-            width: 30%;
+            width: 40%;
             height: 20px;
             margin-left: 50px;
             margin-top: 10px;
@@ -286,18 +282,18 @@ $secondary: #ce7d4b;
         {
             display: flex;
             flex-direction: row;
+            align-content: center;
             margin-left: auto;
             margin-right: auto;
             margin-top: 20px;
 
             i 
             {
-                margin-left: 70px;
+                padding: 30px;
                 font-size: 20px;
                 color: rgb(255, 255, 255);
             }
         }
     }
-
 
 }
