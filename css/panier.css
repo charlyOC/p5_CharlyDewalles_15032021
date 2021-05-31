@@ -192,6 +192,12 @@
   margin-bottom: 12px;
 }
 
+#container #modal .error {
+  animation: shake .1s linear;
+  animation-iteration-count: 3;
+  border: 1px solid red;
+}
+
 #container #modal #confirm {
   border: none;
   cursor: pointer;

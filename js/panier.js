@@ -1,5 +1,24 @@
 
 
+function checkInputUser(){
+
+    let firstName = document.getElementById('firstname').value;
+    let lastName = document.getElementById('lastname').value;
+    let address = document.getElementById('address').value;
+    let city = document.getElementById('city').value;
+    let email = document.getElementById('email').value;
+
+    let regexText = /^[a-zA-Z]+$/;
+    let regexAddress = /^\d+\s[A-z]+\s[A-z]+/;
+    let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (firstName.match(regexText), lastName.match(regexText), address.match(regexAddress), city.match(regexText), email.match(regexMail)){
+        return true
+    } else {
+        return false
+    }
+};
+
 
 let cartItems = localStorage.getItem('basket');
 cartItems = JSON.parse(cartItems)
@@ -79,6 +98,8 @@ if (cartItems === null){
                     cartItems.splice(index, 1)
                     localStorage.setItem('basket', JSON.stringify(cartItems));
                         
+                } if(cartItems == 0){
+                    localStorage.clear();
                 }
                 location.reload()
                 
@@ -95,11 +116,21 @@ if (cartItems === null){
     });
 }
 
+
+let submit = document.getElementById('confirm');
 let totalCost = 0; 
 
-cartItems.forEach (item => {
-    totalCost += item.quantité * item.price;
-})
+let inputs = document.getElementsByTagName('input');
+
+if (cartItems === null){
+    submit.disabled = true;
+} else{
+    cartItems.forEach (item => {
+        totalCost += item.quantité * item.price;
+    })
+}
+
+
 
 
 let priceDiv = document.getElementById('total');
@@ -109,68 +140,62 @@ let totalPrice = document.createElement('h2');
 totalPrice.setAttribute('id', 'total_price');
 totalPrice.textContent = 'Total : ' + totalCost + ' €';
 priceDiv.appendChild(totalPrice); 
-
-if (totalCost == 0){
-    let emptyBasket = document.createElement('h2');
-    emptyBasket.setAttribute('id', 'empty_basket');
-    emptyBasket.textContent = 'Le panier est vide :(';
-    allProducts.appendChild(emptyBasket);
-    localStorage.removeItem('basket');
-}
-
-
-
-let submit = document.getElementById('confirm');
-
-
+    
+ 
 submit.addEventListener('click', () => {
 
+    let validation = checkInputUser();
 
+    if (validation === false){
+        alert('les informations saisies ne sont pas valides')
 
-    let dataToSend = {
+    } else {
+    
 
-        contact : {
+        let dataToSend = {
+
+            contact : {
+                    
+                firstName: document.getElementById('firstname').value,
+                lastName: document.getElementById('lastname').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                email: document.getElementById('email').value,
+            },
+                
+            products : []
             
-            firstName: document.getElementById('firstname').value,
-            lastName: document.getElementById('lastname').value,
-            address: document.getElementById('address').value,
-            city: document.getElementById('city').value,
-            email: document.getElementById('email').value,
-        },
+        };
         
-        products : []
-    
-      
-    };
+        let productId = JSON.parse(localStorage.getItem('basket'));
+            productId.forEach( element => {
+            dataToSend.products.push(element.id);
+        });
 
-
- 
-    
-    let productId = JSON.parse(localStorage.getItem('basket'));
-    productId.forEach( element => {
-        dataToSend.products.push(element.id);
-    });
-    
-    fetch("http://localhost:3000/api/furniture/order", {
+        fetch("http://localhost:3000/api/furniture/order", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+        "Content-Type": "application/json",
         },
+        mode:'cors',
         body: JSON.stringify(dataToSend),
-    }).then(response => response.json())
-    .then((response) => {
-        localStorage.setItem('contact', JSON.stringify(response.contact));
-        localStorage.setItem('orderId', JSON.stringify(response.orderId));
-        localStorage.setItem('finalPrice', JSON.stringify(totalCost));
-        let firstName = document.getElementById('firstname').value;
-        localStorage.setItem('firstname', JSON.stringify(firstName))
-        window.location.assign("commande.html?orderId=" + response.orderId)
-
-    }).catch(function (error){
-        console.log('Failed To Fetch API')
-    })
-
+        }).then((response) => response.json()) 
+        .then((response) => {
+        
+            localStorage.setItem('contact', JSON.stringify(response.contact));
+            localStorage.setItem('orderId', JSON.stringify(response.orderId));
+            localStorage.setItem('finalPrice', JSON.stringify(totalCost));
+        });
+    }
+ 
 });
+
+
+
+
+
+
+
 
 
 
