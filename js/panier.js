@@ -2,22 +2,28 @@
 
 function checkInputUser(){
 
+    let regexText = /^([A-Za-z]+)$/;
+    let regexAddress = /^\d+\s[A-z]+\s[A-z]+/;
+    let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    
     let firstName = document.getElementById('firstname').value;
     let lastName = document.getElementById('lastname').value;
     let address = document.getElementById('address').value;
     let city = document.getElementById('city').value;
     let email = document.getElementById('email').value;
 
-    let regexText = /^[a-zA-Z]+$/;
-    let regexAddress = /^\d+\s[A-z]+\s[A-z]+/;
-    let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-    if (firstName.match(regexText), lastName.match(regexText), address.match(regexAddress), city.match(regexText), email.match(regexMail)){
-        return true
+    if (firstName.match(regexText) && lastName.match(regexText) && address.match(regexAddress) && city.match(regexText) && email.match(regexMail)) {
+        console.log(1)
+        return (true)
+        
     } else {
-        return false
+        console.log(0)
+        return (false)
     }
+
 };
+
 
 
 let cartItems = localStorage.getItem('basket');
@@ -144,14 +150,11 @@ priceDiv.appendChild(totalPrice);
  
 submit.addEventListener('click', () => {
 
-    let validation = checkInputUser();
 
-    if (validation === false){
-        alert('les informations saisies ne sont pas valides')
+    let validation = checkInputUser(); 
 
-    } else {
-    
-
+    if (validation === true){
+        
         let dataToSend = {
 
             contact : {
@@ -181,12 +184,21 @@ submit.addEventListener('click', () => {
         body: JSON.stringify(dataToSend),
         }).then((response) => response.json()) 
         .then((response) => {
-        
+            localStorage.setItem('firstname', JSON.stringify(document.getElementById('firstname').value))
             localStorage.setItem('contact', JSON.stringify(response.contact));
             localStorage.setItem('orderId', JSON.stringify(response.orderId));
             localStorage.setItem('finalPrice', JSON.stringify(totalCost));
+            window.location.href="commande.html";
         });
+        console.log('11');
+        
+
+    } else {
+
+        alert('les informations saisies ne sont pas valides')
+
     }
+    
  
 });
 
