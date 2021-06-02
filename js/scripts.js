@@ -2,14 +2,11 @@ fetch('http://localhost:3000/api/furniture')
 .then((response) => response.json())
 .then((response) => {
 
-  
 
 for (let i = 0; i < response.length; i++) {
   
   const cardFurniture = document.getElementById('meubles');
   
-
-
   const etiquette = document.createElement('a');
   etiquette.setAttribute('class', 'etiquette_product');
   etiquette.setAttribute('href', 'produit.html?id=' + (response[i]._id));
@@ -41,7 +38,7 @@ for (let i = 0; i < response.length; i++) {
 
   cardFurniture.appendChild(etiquette);
 }
-});
+}).catch(error => alert("Erreur : " + error));
 
 
 

@@ -1,50 +1,28 @@
 
-
-function checkInputUser(){
-
-    let regexText = /^([A-Za-z]+)$/;
-    let regexAddress = /^\d+\s[A-z]+\s[A-z]+/;
-    let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-    
-    let firstName = document.getElementById('firstname').value;
-    let lastName = document.getElementById('lastname').value;
-    let address = document.getElementById('address').value;
-    let city = document.getElementById('city').value;
-    let email = document.getElementById('email').value;
-
-    if (firstName.match(regexText) && lastName.match(regexText) && address.match(regexAddress) && city.match(regexText) && email.match(regexMail)) {
-        console.log(1)
-        return (true)
-        
-    } else {
-        console.log(0)
-        return (false)
-    }
-
-};
-
-
+// je déclare une variable pour récupérer les articles dans le panier
 
 let cartItems = localStorage.getItem('basket');
 cartItems = JSON.parse(cartItems)
 
+// ensuite, j'affiche les différents produits du panier 
+// et les boutons pour gérer la quantité de celui-ci
 
-const allProducts = document.getElementById('all_products');
+function displayProductAndQuantity(){
+    // div principale pour l'affichage
+    const allProducts = document.getElementById('all_products');
 
+    //si le panier est vide, j'affiche un message et je désactive le bouton d'envoie du formulaire
+    if (cartItems === null){
 
-if (cartItems === null){
+        let emptyBasket = document.createElement('h2');
+        emptyBasket.setAttribute('id', 'empty_basket');
+        emptyBasket.textContent = 'Le panier est vide :(';
+        allProducts.appendChild(emptyBasket);
+        submitDisabled();
 
-    let emptyBasket = document.createElement('h2');
-    emptyBasket.setAttribute('id', 'empty_basket');
-    emptyBasket.textContent = 'Le panier est vide :(';
-    allProducts.appendChild(emptyBasket);
-
-
-
-    } else {
-        cartItems.forEach(element => {
-
+        // si le panier a 1 produit ou plus, je loop pour récupérer ces produits et je les affiches 
+        } else {
+            cartItems.forEach(element => {
 
             let productContainer = document.createElement("div");
             productContainer.setAttribute('class', 'product_container')
@@ -91,6 +69,8 @@ if (cartItems === null){
             plusIcon.setAttribute('class', 'icon_plus');
             plusIcon.setAttribute('class', 'far fa-plus-square');
             btnPlus.appendChild(plusIcon);
+                
+            //une fois le bouton créé j'écoute le clique pour gérer la quantité, et je recharge la page à chaque changement
 
             btnLess.addEventListener('click', () => {
 
@@ -112,95 +92,159 @@ if (cartItems === null){
             });
 
             btnPlus.addEventListener('click', () => {
-            element.quantité ++; 
-            localStorage.setItem("basket", JSON.stringify(cartItems));
+                element.quantité ++; 
+                localStorage.setItem("basket", JSON.stringify(cartItems));
 
-            location.reload()
-        }) 
-        
+                location.reload()
+            }) ;
 
+        });
+    }
+};
+
+// je crée une fonction pour définir la quantité des produits
+
+function quantityOfProduct(){
+
+    let numberOfProduct = 0
+
+    cartItems.forEach(number => {
+        numberOfProduct = number.quantité
     });
+
+    return numberOfProduct
+};
+
+// je crée une fonction pour désactiver le bouton en cas de panier vide 
+
+function submitDisabled(){
+    let submit = document.getElementById('confirm');
+    submit.disabled = true;
 }
 
+// fonction pour le prix total du panier
 
-let submit = document.getElementById('confirm');
-let totalCost = 0; 
+function priceOfBasket(){
 
-let inputs = document.getElementsByTagName('input');
 
-if (cartItems === null){
-    submit.disabled = true;
-} else{
+    let totalCost = 0; 
+
     cartItems.forEach (item => {
         totalCost += item.quantité * item.price;
-    })
-}
+    });
 
+    return totalCost
 
+};
 
+// affichage du prix total
 
-let priceDiv = document.getElementById('total');
+function displayPrice(){
 
+    let priceDiv = document.getElementById('total');
 
-let totalPrice = document.createElement('h2');
-totalPrice.setAttribute('id', 'total_price');
-totalPrice.textContent = 'Total : ' + totalCost + ' €';
-priceDiv.appendChild(totalPrice); 
-    
- 
-submit.addEventListener('click', () => {
+    let totalPrice = document.createElement('h2');
 
+    totalPrice.setAttribute('id', 'total_price');
+    totalPrice.textContent = 'Total : ' + priceOfBasket() + ' €';
+    priceDiv.appendChild(totalPrice);
 
-    let validation = checkInputUser(); 
+};
 
-    if (validation === true){
-        
-        let dataToSend = {
+// foonction pour vérifier les valeurs rentrées par l'utilisateur
 
-            contact : {
-                    
-                firstName: document.getElementById('firstname').value,
-                lastName: document.getElementById('lastname').value,
-                address: document.getElementById('address').value,
-                city: document.getElementById('city').value,
-                email: document.getElementById('email').value,
-            },
-                
-            products : []
-            
-        };
-        
-        let productId = JSON.parse(localStorage.getItem('basket'));
-            productId.forEach( element => {
-            dataToSend.products.push(element.id);
-        });
+function checkInputUser(){
 
-        fetch("http://localhost:3000/api/furniture/order", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        mode:'cors',
-        body: JSON.stringify(dataToSend),
-        }).then((response) => response.json()) 
-        .then((response) => {
-            localStorage.setItem('firstname', JSON.stringify(document.getElementById('firstname').value))
-            localStorage.setItem('contact', JSON.stringify(response.contact));
-            localStorage.setItem('orderId', JSON.stringify(response.orderId));
-            localStorage.setItem('finalPrice', JSON.stringify(totalCost));
-            window.location.href="commande.html";
-        });
-        console.log('11');
-        
+    //création des regex nécessaire pour la validation
+    let regexText = /^([A-Za-z]+)$/;
+    let regexAddress = /^\d+\s[A-z]+\s[A-z]+/;
+    let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+    // je récupère les valeurs rentrées par l'utilisateur
+    let firstName = document.getElementById('firstname').value;
+    let lastName = document.getElementById('lastname').value;
+    let address = document.getElementById('address').value;
+    let city = document.getElementById('city').value;
+    let email = document.getElementById('email').value;
+
+    // si ça match aux regex je renvoie (true) à la fonction
+    if (firstName.match(regexText) && lastName.match(regexText) && address.match(regexAddress) && city.match(regexText) && email.match(regexMail)) {
+        console.log(1)
+        return (true)
+    // sinon je renvoie (false)   
     } else {
-
-        alert('les informations saisies ne sont pas valides')
-
+        console.log(0)
+        return (false)
     }
+
+};
     
- 
-});
+// une fois les valeurs vérifiées, j'envoie une requête POST à l'api
+function validFormAndSend(){
+
+    let submit = document.getElementById('confirm');
+
+    submit.addEventListener('click', () => {
+
+        let validation = checkInputUser(); 
+    
+        if (validation === true){
+            
+            //je regroupe les données à envoyer dans une seule et même variable
+
+            let dataToSend = {
+    
+                contact : {
+                        
+                    firstName: document.getElementById('firstname').value,
+                    lastName: document.getElementById('lastname').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    email: document.getElementById('email').value,
+                },
+                    
+                products : []
+                
+            };
+            
+            let productId = JSON.parse(localStorage.getItem('basket'));
+                productId.forEach( element => {
+                dataToSend.products.push(element.id);
+            });
+    
+            fetch("http://localhost:3000/api/furniture/order", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            mode:'cors',
+            body: JSON.stringify(dataToSend),
+            }).then((response) => response.json()) 
+            .then((response) => {
+                localStorage.setItem('firstname', JSON.stringify(document.getElementById('firstname').value))
+                localStorage.setItem('contact', JSON.stringify(response.contact));
+                localStorage.setItem('orderId', JSON.stringify(response.orderId));
+                localStorage.setItem('total-price', JSON.stringify(priceOfBasket()))
+                window.location.href="commande.html";
+            }).catch(error => alert("Erreur : " + error));
+            
+    
+        } else {
+    
+            alert('les informations saisies ne sont pas valides')
+    
+        }
+    });
+    
+};
+
+
+// j'appelle les fonctions nécessaires 
+
+displayProductAndQuantity();
+displayPrice();
+validFormAndSend();
+
 
 
 

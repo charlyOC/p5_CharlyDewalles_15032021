@@ -4,8 +4,7 @@ orderId.textContent = localStorage.getItem('orderId');
 let firstName = document.getElementById('firstname');
 firstName.textContent = localStorage.getItem('firstname', JSON.stringify(firstName));
 
-
 let totalPrice = document.getElementById('total_price');
-totalPrice.textContent = localStorage.getItem('finalPrice') + '€';
+totalPrice.textContent = localStorage.getItem('total-price') + '€';
 
 localStorage.clear();
