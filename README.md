@@ -1,15 +1,12 @@
-# Orinoco #
-
-This is the back end server for Project 5 of the Junior Web Developer path.
-
-### Prerequisites ###
-
-You will need to have Node and `npm` installed locally on your machine.
 
 ### Installation ###
 
-Clone this repo. From within the project folder, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+. cloner le repository github https://github.com/charlyOC/p5_CharlyDewalles_15032021.
+
+. via l'invite de commande aller dans le dossier cloné 
+
+. éxécuter `npm install`
+
+. et enfin `node server`
+
+. le serveur devrait se lancer et afficher `Listening on port 3000`
