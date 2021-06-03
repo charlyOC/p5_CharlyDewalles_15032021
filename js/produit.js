@@ -1,13 +1,15 @@
 
-
+// je déclare un constante pour récupérer l'url du produit 
 const url = window.location.search;
 let params = new URLSearchParams (url);
 let idProduct = params.get('id');
 
+// je fetch l'api + l'id pour afficher les infos du produit cliqué
 fetch('http://localhost:3000/api/furniture/' + idProduct)
 .then((response) => response.json())
 .then((response) => {
 
+  // je déclare une fonction dans le fetch pour récupérer les réponse et les afficher
   function displayProduct(){
 
     const customProduct = document.getElementById('custom_product');
@@ -39,13 +41,15 @@ fetch('http://localhost:3000/api/furniture/' + idProduct)
     description.textContent = response.description;
     customProduct.appendChild(description);
   
-  
+
     let varnish = document.createElement('select');
     varnish.setAttribute('class', 'select_varnish');
     customProduct.appendChild(varnish);
   
     let choice = document.querySelector('.select_varnish');
-    
+
+    // j'affiche les vernis en les loopant, pour avoir le même nombre d'options que de vernis  
+
     response.varnish.forEach (function (varnish)
     {
       let option = document.createElement('option');
@@ -56,6 +60,7 @@ fetch('http://localhost:3000/api/furniture/' + idProduct)
   
   };
   
+  // je crée un objet products avec les réponses de l'api 
 
   let products = 
   {
@@ -65,27 +70,37 @@ fetch('http://localhost:3000/api/furniture/' + idProduct)
     image: response.imageUrl,
     quantité: 1,
   }
+
   
+
+  // je déclare basket qui va être un array par la suite, et je parse les infos envoyer dedans 
   let basket = JSON.parse(localStorage.getItem("basket"));
     
-  let produitExistant = 0; 
-  
+  // je déclare une variable de produit existant que je mets à 0 
+  let existingProduct = 0; 
+
+
+  // si j'ajoute un produit et qu'il n'y a pas d'array pour l'acceuillir, je crée l'array basket
   if (basket === null) {
     basket = [];
+    // si un produit existe dans le panier je loop son contenu  
   } else {
     basket.forEach(element => {
+      // si deux Id correspondent, je rajoute 1 à ce produit, et 1 à la quantité générale
       if (element.id == response._id) {
         element.quantité ++;
-        produitExistant ++;
-        console.log(produitExistant);
+        existingProduct ++;
       } 
     }); 
-          
   }
-  
-  if (produitExistant == 0) {
+
+  // si il n'y a aucun produit, je push l'objet produit dans le panier
+  if (existingProduct == 0) {
     basket.push(products);
   }
+    
+  
+
   
   function addToCart(){
     
@@ -93,17 +108,19 @@ fetch('http://localhost:3000/api/furniture/' + idProduct)
   
     addCart.addEventListener('click', () => {
   
-  
       window.alert('le produit a été ajouté au panier :)')
       
       localStorage.setItem("basket", JSON.stringify(basket));
     })
   };
-  
+
   displayProduct();
   addToCart();
-})
-.catch(error => alert("Erreur : " + error));
+  
+}).catch(error => alert("Erreur : " + error));
+
+
+
  
 
 

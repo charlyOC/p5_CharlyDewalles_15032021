@@ -1,5 +1,5 @@
 
-// je déclare une variable pour récupérer les articles dans le panier
+// je déclare la variable pour récupérer les articles dans le panier
 
 let cartItems = localStorage.getItem('basket');
 cartItems = JSON.parse(cartItems)
@@ -11,7 +11,7 @@ function displayProductAndQuantity(){
     // div principale pour l'affichage
     const allProducts = document.getElementById('all_products');
 
-    //si le panier est vide, j'affiche un message et je désactive le bouton d'envoie du formulaire
+    //si le panier est vide, j'affiche un message et j'envoie un fonction qui désactive le bouton d'envoie du formulaire
     if (cartItems === null){
 
         let emptyBasket = document.createElement('h2');
@@ -20,7 +20,7 @@ function displayProductAndQuantity(){
         allProducts.appendChild(emptyBasket);
         submitDisabled();
 
-        // si le panier a 1 produit ou plus, je loop pour récupérer ces produits et je les affiches 
+        // si le panier a 1 produit ou plus, je loop pour récupérer ces produits et je les affiche
         } else {
             cartItems.forEach(element => {
 
@@ -80,10 +80,12 @@ function displayProductAndQuantity(){
                         
                 }  else {
 
+                // si la quantité d'un produit est à zéro, je splice pour l'enlever du localStorage  
                     let index = cartItems.indexOf(element);
                     cartItems.splice(index, 1)
                     localStorage.setItem('basket', JSON.stringify(cartItems));
-                        
+
+                // si il n'y a plus aucun produit je clear le localStorage          
                 } if(cartItems == 0){
                     localStorage.clear();
                 }
@@ -114,8 +116,7 @@ function quantityOfProduct(){
 
     return numberOfProduct
 };
-
-// je crée une fonction pour désactiver le bouton en cas de panier vide 
+// fonction pour désactiver le bouton en cas de panier vide 
 
 function submitDisabled(){
     let submit = document.getElementById('confirm');
@@ -207,11 +208,13 @@ function validFormAndSend(){
                 
             };
             
+            // je récupère l'id du ou des produits a envoyer 
             let productId = JSON.parse(localStorage.getItem('basket'));
                 productId.forEach( element => {
                 dataToSend.products.push(element.id);
             });
     
+            // je fetch  l'api, et je fais une requête POST
             fetch("http://localhost:3000/api/furniture/order", {
             method: "POST",
             headers: {
@@ -221,10 +224,12 @@ function validFormAndSend(){
             body: JSON.stringify(dataToSend),
             }).then((response) => response.json()) 
             .then((response) => {
+                // je récupère les éléments envoyés par l'api, ainsi que le prénom et le prix final, que je stringify pour les exploiter
                 localStorage.setItem('firstname', JSON.stringify(document.getElementById('firstname').value))
                 localStorage.setItem('contact', JSON.stringify(response.contact));
                 localStorage.setItem('orderId', JSON.stringify(response.orderId));
                 localStorage.setItem('total-price', JSON.stringify(priceOfBasket()))
+                // après avoir récupérer les infos, je charge la page "commmande.html" pour afficher les infos
                 window.location.href="commande.html";
             }).catch(error => alert("Erreur : " + error));
             
