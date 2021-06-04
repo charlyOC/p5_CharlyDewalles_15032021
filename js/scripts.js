@@ -1,8 +1,9 @@
+// je fetch l'api pour récupérer les informations des produits 
 fetch('http://localhost:3000/api/furniture')
 .then((response) => response.json())
 .then((response) => {
 
-
+// je loop pour récupérer les informations reçues et je crée une structure en conséquence
 for (let i = 0; i < response.length; i++) {
   
   const cardFurniture = document.getElementById('meubles');
@@ -38,7 +39,9 @@ for (let i = 0; i < response.length; i++) {
 
   cardFurniture.appendChild(etiquette);
 }
-}).catch(error => alert("Erreur : " + error));
+})
+// erreur si l'api ne fonctionne pas
+.catch(error => alert("Erreur : " + error));
 
 
 
