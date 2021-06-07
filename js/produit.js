@@ -73,7 +73,7 @@ fetch('http://localhost:3000/api/furniture/' + idProduct)
 
   
 
-  // je déclare basket qui va être un array par la suite, et je parse les infos envoyer dedans 
+  // je déclare basket qui va être un array par la suite, et je parse les infos envoyées dedans 
   let basket = JSON.parse(localStorage.getItem("basket"));
     
   // je déclare une variable de produit existant que je mets à 0 

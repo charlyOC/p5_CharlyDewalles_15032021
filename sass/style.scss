@@ -227,3 +227,16 @@ $secondary: #ce7d4b;
         }
     }
 }
+
+@media (max-width: 768px) { 
+    #container
+    {
+        #meubles
+        {
+            a 
+            {
+                width: 90%;
+            }
+        }
+    }
+}
